@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresas Filiadas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Empresas Filiadas</h1>
+    <p>Consulte todas as empresas cadastradas no sistema, abaixo</p>
+    <hr />
+
+    <div class="container mt-3">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Nome fantasia</th>
+                    <th>Razão social</th>
+                    <th>CNPJ</th>
+                    <th>Data/Hora de Cadastro</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let empresa of empresas">
+                    <td>{{ empresa.nomeFantasia }}</td>
+                    <td>{{ empresa.razaoSocial }}</td>
+                    <td>{{ empresa.cnpj }}</td>
+                    <td>{{ empresa.dataHoraCadastro | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="modal"
+                            data-bs-target="#modalEdicao" (click)="onEdit(empresa.idEmpresa)">
+                            Editar
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm" (click)="onDelete(empresa.idEmpresa)">
+                            Excluir
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">Quantidade de empresas: {{empresas.length}}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <!-- Modal de edição -->
+
+        <div class="modal fade" id="modalEdicao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            Edição de empresas</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="formEdicao" (ngSubmit)="onEditSubmit()">
+                       
+                            <input type="hidden" formControlName="idEmpresa" />
+                            <div class="mb-3">
+                                <label>Nome da empresa:</label>
+                                <input type="text" class="form-control" formControlName="nomeFantasia" />
+
+                                <div class="text-danger"
+                                    *ngIf="fEdicao['nomeFantasia'].touched && fEdicao['nomeFantasia'].invalid">
+                                    O preenchimento do nome fantasia é obrigatório e deve ter de 8 a 100 caracteres.
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label>Razão social:</label>
+                                <input type="text" class="form-control" formControlName="razaoSocial" />
+
+                                <div class="text-danger"
+                                    *ngIf="fEdicao['razaoSocial'].touched && fEdicao['razaoSocial'].invalid">
+                                    O preenchimento da razão social é obrigatório e deve ter de 8 a 100 caracteres.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label>CNPJ:</label>
+                                <input type="text" class="form-control" formControlName="cnpj" />
+
+                                <div class="text-danger" *ngIf="fEdicao['cnpj'].touched && fEdicao['cnpj'].invalid">
+                                    O preenchimento do CNPJ é obrigatorio e deve conter 14 dígitos
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-primary" 
+                                    data-bs-dismiss="modal" value="Salvar alterações" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

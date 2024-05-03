@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Empresa</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #28a745; /* Cor verde (#28a745) para a borda */
+            border-radius: 8px; /* Borda arredondada */
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            font-size: 0.8rem; /* Define o tamanho da fonte para 0.8rem */
+            text-align: left; /* Alinha o texto à esquerda */
+            display: block; /* Faz com que o texto seja exibido em uma linha separada */
+            margin-bottom: 5px; /* Adiciona um pequeno espaço entre as labels e os campos de entrada */
+        }
+
+        .form-control {
+            width: 100%; /* Define a largura dos campos de entrada como 100% para preencher o contêiner */
+        }
+
+        .btn-primary {
+            width: 100%; /* Define a largura do botão como 100% para preencher o contêiner */
+        }
+    </style>
+
+    
+</head>
+<body>
+    <div class="container">
+        
+        <div class="text-center mt-3 mb-3">
+            <h5 class="text-success">{{mensagemSucesso}}</h5>
+          </div>
+        <h2>Cadastrar Empresa</h2>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+              <label for="nomeFantasia" class="form-label">Nome Fantasia:</label>
+              <input type="text" class="form-control" id="nomeFantasia" placeholder="Insira o nome fantasia" formControlName="nomeFantasia">
+              <div class="text-danger" *ngIf="f.nomeFantasia.touched && f.nomeFantasia.invalid">
+                  Por favor, informe um nome fantasia válido de 8 a 100 caracteres.
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="razaoSocial" class="form-label">Razão Social:</label>
+              <input type="text" class="form-control" id="razaoSocial" placeholder="Insira a razão social" formControlName="razaoSocial">
+              <div class="text-danger" *ngIf="f.razaoSocial.touched && f.razaoSocial.invalid">
+                  Por favor, informe uma razão social válida de 8 a 100 caracteres.
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="cnpj" class="form-label">CNPJ:</label>
+              <input type="text" class="form-control" id="cnpj" placeholder="Insira o CNPJ" formControlName="cnpj">
+              <div class="text-danger" *ngIf="f.cnpj.touched && f.cnpj.invalid">
+                  Por favor, informe um CNPJ válido de 14 dígitos.
+              </div>
+          </div>
+          <div class="mb-3">
+              <button type="submit" class="btn btn-success" [disabled]="form.invalid">Realizar Cadastro</button>
+          </div>
+      </form>
+    </div>
+</body>
+</html>
